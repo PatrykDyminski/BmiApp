@@ -19,7 +19,7 @@ class InfoActivity : AppCompatActivity() {
 
     }
 
-    fun setInfo(category:String){
+    private fun setInfo(category:String){
 
         textWynik.text = when(category){
             getString(R.string.healthy) -> "healthy dhuaihiuahfioasjfas"

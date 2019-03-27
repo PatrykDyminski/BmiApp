@@ -13,16 +13,17 @@ import com.example.bmi.Logic.DataItem
 import kotlinx.android.synthetic.main.activity_main.*
 import android.content.SharedPreferences
 import android.R.id.edit
+import android.content.Context
 import android.content.SharedPreferences.Editor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
 
     private var unitsSwitched: Boolean = false
-
-    var historyList = arrayListOf<DataItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,28 +33,29 @@ class MainActivity : AppCompatActivity() {
         infoBtn.setOnClickListener{ onInfoClicked() }
     }
 
-    fun saveData(){
+    private fun saveData(elem:DataItem){
 
-        val prefs = getPreferences(MODE_PRIVATE)
-        val editor = prefs.edit()
+        val prefs = this.getSharedPreferences("com.example.bmi.prefs", Context.MODE_PRIVATE)
+
+        val t = readAllRecords()
+        val historyList = listOf(elem) + t.take(9)
 
         val jsonHistory = Gson().toJson(historyList)
-        editor.remove(getString(R.string.prefs_history_key)).commit()
-        editor.putString(getString(R.string.prefs_history_key),jsonHistory)
-        editor.commit()
+        with(prefs.edit()) {
+            remove("history")
+            putString("history", jsonHistory)
+            apply()
+        }
+
     }
 
-    fun loadData(){
+    private fun readAllRecords() : List<DataItem> {
 
-        val prefs = getPreferences(MODE_PRIVATE)
+        val prefs = this.getSharedPreferences("com.example.bmi.prefs", Context.MODE_PRIVATE)
 
-        val jsonHistory = prefs!!.getString(getString(R.string.prefs_history_key),"")
-        val type = object : TypeToken<ArrayList<DataItem>>(){}.type
-
-        historyList = Gson().fromJson<ArrayList<DataItem>>(
-            jsonHistory,
-            type
-        )
+        val jsonHistory = prefs.getString("history", "[]")
+        class Token : TypeToken<List<DataItem>>()
+        return Gson().fromJson<List<DataItem>>(jsonHistory, Token().type)
 
     }
 
@@ -68,10 +70,8 @@ class MainActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         unitsSwitched = savedInstanceState!!.getBoolean(getString(R.string.imperial))
         result_label.text = savedInstanceState!!.getString(getString(R.string.result_key))
-
         val cat = savedInstanceState!!.getString(getString(R.string.category_key))
         category_label.text = cat
-
         setColors(cat)
 
         if(unitsSwitched){
@@ -94,7 +94,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu?.findItem(R.id.change_units)?.isChecked = unitsSwitched
-
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -119,9 +118,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onHistoryPressed() {
-
         //val intent = Intent(this,)
-
         //saveData()
     }
 
@@ -138,7 +135,6 @@ class MainActivity : AppCompatActivity() {
 
         mass_edit.text.clear()
         height_edit.text.clear()
-
         result_label.text = getString(R.string.your_bmi)
         result_label.setTextColor(ContextCompat.getColor(this, R.color.grejXD))
         category_label.text = ""
@@ -171,8 +167,12 @@ class MainActivity : AppCompatActivity() {
 
             val df = "%.2f".format(result)
             result_label.text = df
-
-            changeColorAndCategory(result)
+            var catego = getCategory(result)
+            setColors(catego)
+            category_label.text = catego
+            val date = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+            val historyObject = DataItem(df,mass_edit.text.toString(),height_edit.text.toString(),getCategory(result),date)
+            saveData(historyObject)
 
         }else{
             result_label.text = "Podaj poprawne dane!"
@@ -184,38 +184,24 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this,InfoActivity::class.java)
         val bundle = Bundle()
 
+        //val list = readAllRecords()
+        //val item = list[0].date
+        //bundle.putString(getString(R.string.result_key),item)
+
         bundle.putString(getString(R.string.result_key),result_label.text.toString())
         bundle.putString(getString(R.string.category_key),category_label.text.toString())
-
         intent.putExtras(bundle)
-
         startActivity(intent)
         return true
     }
 
-    private fun changeColorAndCategory(bmi: Double){
-
-        when(bmi){
-            in 0.0 ..18.5 -> {
-                result_label.setTextColor(ContextCompat.getColor(this, R.color.pompeianRose))
-                category_label.text = getString(R.string.underweight)
-                category_label.setTextColor(ContextCompat.getColor(this, R.color.pompeianRose))
-            }
-            in 18.5..25.00 -> {
-                result_label.setTextColor(ContextCompat.getColor(this, R.color.verdigris))
-                category_label.text = getString(R.string.healthy)
-                category_label.setTextColor(ContextCompat.getColor(this, R.color.verdigris))
-            }
-            in 25.0..30.00 -> {
-                result_label.setTextColor(ContextCompat.getColor(this, R.color.lapisLazuli))
-                category_label.text = getString(R.string.overweight)
-                category_label.setTextColor(ContextCompat.getColor(this, R.color.lapisLazuli))
-            }
-            in 30.00..500.00 -> {
-                result_label.setTextColor(ContextCompat.getColor(this, R.color.colorAccent))
-                category_label.text = getString(R.string.obesity)
-                category_label.setTextColor(ContextCompat.getColor(this, R.color.colorAccent))
-            }
+    private fun getCategory(bmi:Double):String{
+        return when(bmi){
+            in 0.0 ..18.5 -> { getString(R.string.underweight) }
+            in 18.5..25.00 -> { getString(R.string.healthy) }
+            in 25.0..30.00 -> { getString(R.string.overweight)  }
+            in 30.00..500.00 -> { getString(R.string.obesity) }
+            else -> "hmm"
         }
 
     }

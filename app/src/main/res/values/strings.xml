@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">BMI</string>
+
+    <string name="imperial">imperial</string>
+    <string name="about">about</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="history">history</string>
+
+    <string name="mass_kg">Mass [Kg]</string>
+    <string name="height_cm">Height [cm]</string>
+    <string name="mass_lb">Mass [Lb]</string>
+    <string name="height_in">Height [In]</string>
+
+    <string name="count_bmi">Count BMI</string>
+    <string name="your_bmi">Your BMI:</string>
+
+    <string name="result_key">result</string>
+
+    <string name="underweight">UNDERWEIGHT</string>
+    <string name="healthy">HEALTHY</string>
+    <string name="overweight">OVERWEIGHT</string>
+    <string name="obesity">OBESITY</string>
+
+    <string name="category_key">category</string>
+    <string name="prefs_history_key">history</string>
+
+</resources>

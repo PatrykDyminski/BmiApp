@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/change_units"
+        android:checkable="true"
+        android:enabled="true"
+        android:title="@string/imperial" />
+
+    <item
+            android:id="@+id/about"
+            android:checkable="false"
+            android:enabled="true"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="@string/about" app:showAsAction="never"/>
+    <item
+            android:id="@+id/history"
+            android:checkable="false"
+            android:enabled="true"
+            android:title="@string/history" app:showAsAction="never"/>
+
+
+</menu>

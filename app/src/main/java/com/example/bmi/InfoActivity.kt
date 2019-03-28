@@ -22,11 +22,10 @@ class InfoActivity : AppCompatActivity() {
     private fun setInfo(category:String){
 
         textWynik.text = when(category){
-            getString(R.string.healthy) -> "healthy dhuaihiuahfioasjfas"
-            getString(R.string.underweight) -> "Under sfafasfasfasfas"
-            getString(R.string.overweight) -> "overve dsffaf"
-            getString(R.string.obesity) -> "obese"
-
+            getString(R.string.healthy) -> getString(R.string.healthy_info)
+            getString(R.string.underweight) -> getString(R.string.underweight_info)
+            getString(R.string.overweight) -> getString(R.string.overweight_info)
+            getString(R.string.obesity) -> getString(R.string.obesity_info)
             else -> "No niee podałeś poprawnych danych albo poza skalą XD"
         }
 

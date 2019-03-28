@@ -11,10 +11,7 @@ import com.example.bmi.Logic.BmiForKgCm
 import com.example.bmi.Logic.BmiForLbIn
 import com.example.bmi.Logic.DataItem
 import kotlinx.android.synthetic.main.activity_main.*
-import android.content.SharedPreferences
-import android.R.id.edit
 import android.content.Context
-import android.content.SharedPreferences.Editor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat
@@ -37,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         val prefs = this.getSharedPreferences("com.example.bmi.prefs", Context.MODE_PRIVATE)
 
-        val t = readAllRecords()
+        val t = getHistory()
         val historyList = listOf(elem) + t.take(9)
 
         val jsonHistory = Gson().toJson(historyList)
@@ -49,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun readAllRecords() : List<DataItem> {
+    private fun getHistory() : List<DataItem> {
 
         val prefs = this.getSharedPreferences("com.example.bmi.prefs", Context.MODE_PRIVATE)
 
@@ -117,9 +114,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onHistoryPressed() {
-        //val intent = Intent(this,)
-        //saveData()
+    private fun onHistoryPressed(): Boolean {
+        val intent = Intent(this,HistoryActivity::class.java)
+        startActivity(intent)
+        return true
     }
 
     private fun changeUnitsPressed() {
@@ -155,7 +153,7 @@ class MainActivity : AppCompatActivity() {
             val mass = mass_edit.text.toString().toInt()
             val height = height_edit.text.toString().toInt()
 
-            var result: Double = 0.0
+            var result = 0.0
 
             if(unitsSwitched){
                 val bmiLb = BmiForLbIn(mass,height)
@@ -175,7 +173,7 @@ class MainActivity : AppCompatActivity() {
             saveData(historyObject)
 
         }else{
-            result_label.text = "Podaj poprawne dane!"
+            result_label.text = getString(R.string.podaj_dane)
             category_label.text = ""
         }
     }
@@ -183,10 +181,6 @@ class MainActivity : AppCompatActivity() {
     private fun onInfoClicked(): Boolean {
         val intent = Intent(this,InfoActivity::class.java)
         val bundle = Bundle()
-
-        //val list = readAllRecords()
-        //val item = list[0].date
-        //bundle.putString(getString(R.string.result_key),item)
 
         bundle.putString(getString(R.string.result_key),result_label.text.toString())
         bundle.putString(getString(R.string.category_key),category_label.text.toString())
@@ -200,7 +194,7 @@ class MainActivity : AppCompatActivity() {
             in 0.0 ..18.5 -> { getString(R.string.underweight) }
             in 18.5..25.00 -> { getString(R.string.healthy) }
             in 25.0..30.00 -> { getString(R.string.overweight)  }
-            in 30.00..500.00 -> { getString(R.string.obesity) }
+            in 30.00..50000.00 -> { getString(R.string.obesity) }
             else -> "hmm"
         }
 

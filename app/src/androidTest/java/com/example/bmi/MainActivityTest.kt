@@ -32,57 +32,25 @@ class MainActivityTest {
         appCompatEditText.perform(click())
 
         val appCompatEditText2 = onView(withId(R.id.mass_edit))
-
         appCompatEditText2.perform(replaceText("80"), closeSoftKeyboard())
 
-        val appCompatEditText3 = onView(
-                withId(R.id.mass_edit)
-        )
+        val appCompatEditText3 = onView(withId(R.id.mass_edit))
         appCompatEditText3.perform(pressImeActionButton())
 
-        val appCompatEditText4 = onView(
-                withId(R.id.height_edit)
-        )
+        val appCompatEditText4 = onView(withId(R.id.height_edit))
         appCompatEditText4.perform(replaceText("180"), closeSoftKeyboard())
 
-        val appCompatEditText5 = onView(
-                withId(R.id.height_edit)
-        )
+        val appCompatEditText5 = onView(withId(R.id.height_edit))
         appCompatEditText5.perform(pressImeActionButton())
 
-        val appCompatButton = onView(
-                withId(R.id.countBtn)
-        )
+        val appCompatButton = onView(withId(R.id.countBtn))
         appCompatButton.perform(click())
 
-        val textView = onView(
-
-                withId(R.id.result_label)
-        )
+        val textView = onView(withId(R.id.result_label))
         textView.check(matches(withText("24,69")))
 
-        val textView2 = onView(
-
-                withId(R.id.category_label)
-        )
+        val textView2 = onView(withId(R.id.category_label))
         textView2.check(matches(withText("HEALTHY")))
     }
 
-    private fun childAtPosition(
-        parentMatcher: Matcher<View>, position: Int
-    ): Matcher<View> {
-
-        return object : TypeSafeMatcher<View>() {
-            override fun describeTo(description: Description) {
-                description.appendText("Child at position $position in parent ")
-                parentMatcher.describeTo(description)
-            }
-
-            public override fun matchesSafely(view: View): Boolean {
-                val parent = view.parent
-                return parent is ViewGroup && parentMatcher.matches(parent)
-                        && view == parent.getChildAt(position)
-            }
-        }
-    }
 }

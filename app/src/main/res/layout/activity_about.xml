@@ -14,7 +14,7 @@
             android:id="@+id/imageView"
             android:visibility="visible"/>
     <TextView
-            android:text="Losowe informacje o mnie. Generalnie tam na zdjęciu to jestem ja jkby co. "
+            android:text="@string/gadanie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
@@ -31,7 +31,7 @@
             android:stepSize="1.0"
             android:rating="4.0" android:layout_gravity="center_horizontal" android:layout_marginTop="16dp"/>
     <TextView
-            android:text="Sam bym chciał, żeby ta aplikacja była fajniejsza, ale zamiast ją pisać to śpiewałem XD"
+            android:text="@string/gadanie2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView2"

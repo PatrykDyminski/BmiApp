@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F5592A</color>
-    <color name="colorPrimaryDark">#B3340B</color>
+    <color name="colorPrimary">#78909c</color>
+    <color name="colorPrimaryDark">#4b636e</color>
 
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#a7c0cd</color>
 
     <color name="pompeianRose">#B80000</color>
     <color name="lapisLazuli">#26619C</color>

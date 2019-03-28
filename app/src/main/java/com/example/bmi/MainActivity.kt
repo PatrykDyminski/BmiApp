@@ -20,6 +20,14 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        const val HIST_KEY = "history"
+        const val RESULT_KEY = "result"
+        const val CATEGORY_KEY = "category"
+        const val IMPERIAL_KEY = "imperial"
+        const val PREFS_KEY = "com.example.bmi.prefs"
+    }
+
     private var unitsSwitched: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,15 +40,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveData(elem:DataItem){
 
-        val prefs = this.getSharedPreferences("com.example.bmi.prefs", Context.MODE_PRIVATE)
+        val prefs = this.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
 
         val t = getHistory()
         val historyList = listOf(elem) + t.take(9)
 
         val jsonHistory = Gson().toJson(historyList)
         with(prefs.edit()) {
-            remove("history")
-            putString("history", jsonHistory)
+            remove(HIST_KEY)
+            putString(HIST_KEY, jsonHistory)
             apply()
         }
 
@@ -48,26 +56,26 @@ class MainActivity : AppCompatActivity() {
 
     private fun getHistory() : List<DataItem> {
 
-        val prefs = this.getSharedPreferences("com.example.bmi.prefs", Context.MODE_PRIVATE)
+        val prefs = this.getSharedPreferences(PREFS_KEY, Context.MODE_PRIVATE)
 
-        val jsonHistory = prefs.getString("history", "[]")
+        val jsonHistory = prefs.getString(HIST_KEY, "[]")
         class Token : TypeToken<List<DataItem>>()
         return Gson().fromJson<List<DataItem>>(jsonHistory, Token().type)
 
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putBoolean(getString(R.string.imperial),unitsSwitched)
-        outState?.putString(getString(R.string.result_key),result_label.text.toString())
-        outState?.putString(getString(R.string.category_key),category_label.text.toString())
+        outState?.putBoolean(IMPERIAL_KEY,unitsSwitched)
+        outState?.putString(RESULT_KEY,result_label.text.toString())
+        outState?.putString(CATEGORY_KEY,category_label.text.toString())
 
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        unitsSwitched = savedInstanceState!!.getBoolean(getString(R.string.imperial))
-        result_label.text = savedInstanceState!!.getString(getString(R.string.result_key))
-        val cat = savedInstanceState!!.getString(getString(R.string.category_key))
+        unitsSwitched = savedInstanceState!!.getBoolean(IMPERIAL_KEY)
+        result_label.text = savedInstanceState!!.getString(RESULT_KEY)
+        val cat = savedInstanceState!!.getString(CATEGORY_KEY)
         category_label.text = cat
         setColors(cat)
 
@@ -182,8 +190,8 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this,InfoActivity::class.java)
         val bundle = Bundle()
 
-        bundle.putString(getString(R.string.result_key),result_label.text.toString())
-        bundle.putString(getString(R.string.category_key),category_label.text.toString())
+        bundle.putString(RESULT_KEY,result_label.text.toString())
+        bundle.putString(CATEGORY_KEY,category_label.text.toString())
         intent.putExtras(bundle)
         startActivity(intent)
         return true

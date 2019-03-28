@@ -35,9 +35,9 @@ class HistoryActivity : AppCompatActivity() {
 
     private fun getHistory() : List<DataItem> {
 
-        val prefs = this.getSharedPreferences("com.example.bmi.prefs", Context.MODE_PRIVATE)
+        val prefs = this.getSharedPreferences(MainActivity.PREFS_KEY, Context.MODE_PRIVATE)
 
-        val jsonHistory = prefs.getString("history", "[]")
+        val jsonHistory = prefs.getString(MainActivity.HIST_KEY, "[]")
         class Token : TypeToken<List<DataItem>>()
         return Gson().fromJson<List<DataItem>>(jsonHistory, Token().type)
 

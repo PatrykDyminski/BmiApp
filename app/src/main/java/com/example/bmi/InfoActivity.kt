@@ -12,10 +12,10 @@ class InfoActivity : AppCompatActivity() {
 
         val bundle = intent.extras
 
-        bmiText.text = bundle.getString(getString(R.string.result_key))
-        categoryText.text = bundle.getString(getString(R.string.category_key))
+        bmiText.text = bundle.getString(MainActivity.RESULT_KEY)
+        categoryText.text = bundle.getString(MainActivity.CATEGORY_KEY)
 
-        setInfo(bundle.getString(getString(R.string.category_key)))
+        setInfo(bundle.getString(MainActivity.CATEGORY_KEY))
 
     }
 

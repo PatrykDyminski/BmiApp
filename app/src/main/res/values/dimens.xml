@@ -1,3 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="bigMargin">16dp</dimen>
+    <dimen name="bigPadding">16dp</dimen>
+    <dimen name="smallMargin">8dp</dimen>
+    <dimen name="gigaPadding">32dp</dimen>
 </resources>

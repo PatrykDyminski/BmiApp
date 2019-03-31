@@ -24,7 +24,7 @@ class HistoryActivity : AppCompatActivity() {
         val myDataset = getHistory()
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = HistoryAdapter(myDataset)
+        viewAdapter = HistoryAdapter(this,myDataset)
 
         recyclerView = history_recycler_view.apply {
             layoutManager = viewManager

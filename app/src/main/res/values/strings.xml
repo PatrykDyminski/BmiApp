@@ -22,13 +22,14 @@
     <string name="obesity">OBESITY</string>
 
     <string name="category_key">category</string>
-    <string name="gadanie">Losowe informacje o mnie. Generalnie tam na zdjęciu to jestem ja jkby co.</string>
-    <string name="gadanie2">Sam bym chciał, żeby ta aplikacja była fajniejsza, ale zamiast ją pisać to śpiewałem XD
-    </string>
+    <string name="gadanie">Losowe informacje o mnie. Generalnie tam na zdjęciu to jestem ja jakby co.</string>
+    <string name="gadanie2">Sam bym chciał, żeby ta aplikacja była fajniejsza, ale zamiast ją pisać to śpiewałem.</string>
+
     <string name="podaj_dane">Podaj poprawne dane!</string>
-    <string name="healthy_info">healthy dhuaihiuahfioasjfas</string>
-    <string name="underweight_info">Under sfafasfasfasfas</string>
-    <string name="overweight_info">overve dsffaf</string>
+    <string name="healthy_info">healthy Zdrowo, przykładowy tekst</string>
+    <string name="underweight_info">Under. Nie tak zdrowo</string>
+    <string name="overweight_info">over. Trochę za dużo, ale nie ma dramatu</string>
     <string name="obesity_info">obese :(</string>
+    <string name="brak_wyniku_bmi">Nie obliczono bmi</string>
 
 </resources>

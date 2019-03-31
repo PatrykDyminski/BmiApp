@@ -26,7 +26,7 @@ class InfoActivity : AppCompatActivity() {
             getString(R.string.underweight) -> getString(R.string.underweight_info)
             getString(R.string.overweight) -> getString(R.string.overweight_info)
             getString(R.string.obesity) -> getString(R.string.obesity_info)
-            else -> "No niee podałeś poprawnych danych albo poza skalą XD"
+            else -> getString(R.string.brak_wyniku_bmi)
         }
 
     }

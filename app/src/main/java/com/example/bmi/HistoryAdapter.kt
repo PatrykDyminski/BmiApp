@@ -1,13 +1,14 @@
 package com.example.bmi
-
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bmi.Logic.DataItem
 
-class HistoryAdapter(private val history: List<DataItem>): RecyclerView.Adapter<HistoryAdapter.DataHolder>() {
+class HistoryAdapter(private val context:Context, private val history: List<DataItem>): RecyclerView.Adapter<HistoryAdapter.DataHolder>() {
 
     override fun getItemCount(): Int {
         return history.size
@@ -28,6 +29,27 @@ class HistoryAdapter(private val history: List<DataItem>): RecyclerView.Adapter<
         holder.height.text = "height: " + history[position].height
         holder.date.text = history[position].date
 
+        holder.category.setTextColor(ContextCompat.getColor(context,R.color.lapisLazuli))
+
+        setColors(history[position].category,holder)
+
+    }
+
+    private fun setColors(category: String, holder:DataHolder){
+        when(category){
+            context.getString(R.string.underweight) -> {
+                holder.category.setTextColor(ContextCompat.getColor(context, R.color.pompeianRose))
+            }
+            context.getString(R.string.healthy) -> {
+                holder.category.setTextColor(ContextCompat.getColor(context, R.color.verdigris))
+            }
+            context.getString(R.string.overweight) -> {
+                holder.category.setTextColor(ContextCompat.getColor(context, R.color.lapisLazuli))
+            }
+            context.getString(R.string.obesity) -> {
+                holder.category.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+            }
+        }
     }
 
     class DataHolder(v: View):RecyclerView.ViewHolder(v){
